@@ -1,0 +1,28 @@
+
+{% load static %}
+<div class="banner">
+	<div class="banner-left col-3">
+		<h1 class="company-logo">Online Supermarket</h1>
+		<i class="fa fa-shoe-prints fa-5x c-defaolt"></i>
+		<!--i class="fa fa-cat fa-5x "  style="color: #FFF;"></i-->
+		<p class="company-moto mt-5">online supermarket</p>
+	</div>
+	<div class="banner-right col-9" style="background-image: url({% static 'pics/banner.jpeg' %}); background-repeat: no-repeat; background-size: cover;">
+		<h1 class="company-name">ONLINE SUPERMARKET Adama</h1>
+		<a href=""><i class=" fa fa-cat fa-2x c-w cat"></i></a>
+		<div class="banner-pic ml-5 ">
+			<!-- <img src="{% static 'pics/.jpg' %}" class="pic-circle"> -->
+		</div>
+	</div>
+</div>
+<div class="mid-nav">
+	<a {% if not category %}class='active'{% endif %} href="{% url 'store:product_list' %}">All</a>
+	{% for c in categories %}
+		<a {% if category.slug == c.slug %}class='active'{% endif %}  href="{{ c.get_absolute_url }}">
+			{{ c.name }} 
+		</a>
+	{% endfor %}
+	
+
+</div>
+

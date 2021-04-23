@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<title>{% block title %}{% endblock %}</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/store.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'fontawesome-free-5.15.1-web/css/all.min.css' %}">
+	
+</head>
+<body>
+	<nav class="navbar" id="myNavbar">
+		<a {% if not category %}class='active'{% endif %} href="{% url 'store:product_list' %}">
+			<i class="fa fa-fw fa-home"></i>Home
+		</a>
+		<a href="#search"><i class="fa fa-fw fa-search"></i> Search</a>
+		<a href="#"><i class="fa fa-fw fa-envelope"></i> Contact</a>
+		<a href="#"><i class="fa fa-fw fa-newspaper"></i> News</a>
+		<a href="{% url 'webdes:webdes_detail' %}"><i class="fa fa-fw fa-blog"></i>About</a>
+		<a href="#">
+			<form method="get" action="{% url 'store:search' %}">
+				
+				<input type="search" class="c-b" name="query" id="search" placeholder="Search" required="">
+				<button type="submit">search
+				</button>
+			</form>
+		<span class="float-r mr-5">
+			<a href="{% url 'cart:cart_detail' %}">
+				<i class="fa fa-shopping-cart "></i>
+				<!--i class="fa fa-shopping-bag "></i-->
+				{% with total_items=cart|length %}
+					{% if total_items > 0 %}
+						<span class="pric">
+							{{ total_items }}, 
+							${{ cart.get_total_price }}
+						</span>
+							
+						
+					{% else %}
+					{% endif %}
+				{% endwith %}
+			</a>
+		</span>
+		<a href="javascript:void(0);" class="icon float-r" onclick="navbarToggler()">
+			<i class="fa fa-bars"></i>
+			
+		</a>
+	</nav>
+	<div class="progress-container" id="progress-bar">
+		<div class="progress-bar" id="myBar"></div>
+	</div> 
+	<div class="contianer">
+		{% block banner_content %}
+		
+		{% endblock %}
+		<div class="row ">
+			<div class=" col-2 col-sm-2">
+				{% block left_side_content %} 
+				{% endblock %}
+			</div>
+			<div class="main-cont col-8 col-sm-12" id="product_list">
+				{% block main_content %} 
+				{% endblock %}	
+				{% block form_content %}
+				{% endblock %}
+			</div>
+			<div class=" col-2 col-sm-2">
+				{% block right_side_content %} 
+				{% endblock %}
+			</div>
+		</div>
+
+		{% block footer_content %}
+		{% endblock %}
+
+	</div>
+
+	<script src="{% static 'jquery-3.5.1/jquery-3.5.1.js' %}"></script>
+	<script>
+
+		$(document).ready(function()
+		{
+			{% block domready %}
+			{% endblock %}
+		});
+		
+
+	</script>
+	
+	<script type="text/javascript" src="{% static 'js/store.js' %}"></script>
+</body>
+</html>

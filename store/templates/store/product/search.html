@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+	search products
+{% endblock %}
+<h1 class="company-name align-center bg-brand-2">Online Supermarket</h1>
+{% block main_content %}
+	<div class="col-6">
+		{% if query %}
+			<div class="d-flex" >
+
+				<div class="col-12">
+					<div class="card">
+						<h5 class="card-header p-1">item containing "{{ query }}"</h3>
+						<h6 class="card-txt p-1">
+							{% with results.count as total_results %}
+								Found {{ total_results }} result{{ total_results|pluralize }}
+							{% endwith %}
+						</h4>
+						
+					</div>
+					
+				</div>
+			</div>
+
+
+
+			<div class="card c-p m-t-1">
+				
+				<div class="tabrow">
+					{% for item in results %}
+						
+							<div class="tabcolumn">
+								<img src="{{ item.picture.url }}" alt="{{ item.name }}" style="width:100%" onclick="zoomImg(this);">
+							</div>
+							<a href="{{ item.get_absolute_url }}">
+							</a>
+					{% empty %}
+						<p class="card-txt ">There are no results for your query.</p>
+					{% endfor %}
+						<a href="{% url 'store:search' %}"><button class="btn-l-p w-100 m-t-1 pointer">Search again</button></a>
+				</div>
+			</div>
+
+			<div class="img-container">
+					<span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span>
+					<img id="expandedImg" style="width:100%">
+					<div id="imgtext"></div>
+				</div>
+		{% else %}
+			<div class="card col-12">
+				<h1 class="card-header align-c">Search for item</h1>
+				<form method="get">
+					<div class="align-c w-100">
+					
+						{% for field in form %}
+							<div class="input-2 d-flex ">
+								{{ field }}
+								<button class="btn-l-p pointer" type="submit"> <i class="fa fa-search "></i></button>
+							</div>
+						{% endfor %}
+					</div>
+				</form>
+				
+			</div>
+		{% endif %}
+		
+	</div>
+{% endblock %}

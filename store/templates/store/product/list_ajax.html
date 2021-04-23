@@ -1,0 +1,38 @@
+{% load i18n static %}
+{% for product in products %}
+	<a href="{{ product.get_absolute_url }}">
+		<div class="card col-sm-3 col-3">
+			<div>
+				<a href="{{ product.get_absolute_url }}">
+					{% load thumbnail %}
+					<img src="{% if product.image %}{% thumbnail product.image 600x500 crop='smart' %}{% else %}{% static 'pics/no-image.png' %}{% endif %}" class="product-pic">
+				</a>
+			</div>
+			<div class="product-btm">
+				<a href="{{ product.get_absolute_url }}" class="product-name">{{ product.name }} </a>
+				
+				<span class="product-catagory pl-5">{% if product.category %}{{ product.category.name }}{% else %}...{% endif %} </span>
+				
+				<span class="pric float-r"> ${{ product.price }} </span>
+
+				<div class="rating" aria-label="{% blocktrans with stars=product.rating %}{{ stars }} of 5 stars{% endblocktrans %}">
+					<span style="width:{{product.get_rating_percentage }}%"></span>
+				</div>
+				
+				<form action="{% url 'cart:cart_add' product.id %}" method="post" class="c-w hidden">
+					{{ cart_product_form }}
+					{% csrf_token %}
+					<button class="btn-defaolt cart-icon" type="submit">
+						<i class=" fa fa-cart-plus"></i>
+					</button>
+				</form>
+				
+
+			</div>
+		</div>
+	</a>
+	{% empty %}
+		<div class="form bg-br w-100">
+			<h1 class="form-h c-b">Not available</h1>
+		</div>
+{% endfor %}

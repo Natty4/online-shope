@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+ Thank you
+{% endblock %}
+
+{% block main_content %}
+	<div class="orders">
+		<h1 class="orders-h">Thank you <span class="c-o">!</span></h1>
+		<p class="c-g">Your order has been successfully completed. Your order number is
+		<strong class="c-o">{{ order.id }}</strong>.</p>
+		
+	</div>
+
+{% endblock %}

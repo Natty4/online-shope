@@ -1,0 +1,44 @@
+  
+<footer>
+	<div class="footer">
+		<div class="catagory col-4 pl-5">
+			<h3 class="footer-h">Category</h3>
+			<a href="{% url 'store:product_list' %}">All</a>
+			{% for c in categories %}
+				<a {% if category.slug == c.slug %}class='active'{% endif %}  href="{{ c.get_absolute_url }}">
+					{{ c.name }} 
+				</a>
+			{% endfor %}	
+		</div>
+		<div class="custumer-s col-4 pl-5">
+			<h3 class="footer-h">Contact</h3>
+			<i class="fa fa-2x fa-headset"></i><br><br>
+			<i class="fa fa-phone">+251234567890</i>
+		</div>
+		<div class="contact col-4 pl-5">
+			<h3 class="footer-h">Social</h3>
+	
+			<a href="" target="_break" class="links-d linkedin ">
+				<i class="pointer pl-3  fab fa-linkedin"></i>
+			</a>
+			<a href="" target="_break" class="links-d twitter ">
+				<i class="pointer pl-3  fab fa-twitter"></i>
+			</a>
+			<a href="" target="_break" class="links-d telegram">
+				<i class="pointer pl-3  fab fab fa-telegram"></i>
+			</a>
+			<a href="" target="_break" class="links-d instagram">
+				<i class="pointer pl-3  fab fa-instagram"></i>
+			</a>
+			<a href="" target="_break" class="links-d facebook"><i class="pointer pl-3  fab fa-facebook"> </i> 
+			</a>
+		</div>
+	</div>
+	<div class="copyright"> 
+		<span class="c-r"> Online Supermarket </span> 
+		<div class="copyright align-c">
+			 7Noon ©<script>document.write(new Date().getFullYear());</script> All rights reserved 
+		</div>
+		<button onclick="topFunction()" id="myBtn" title="Go to top">Top ^ </button> 
+	</div>
+</footer>

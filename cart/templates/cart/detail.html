@@ -1,0 +1,331 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+{% block main_content %}
+	
+	<div class="detail-cont col-12">
+		<div class="related-products col-12">
+			{% for item in cart %}
+				{% with product=item.product %}
+					<div class="card col-2">
+						<div>
+							<a href="{{ product.get_absolute_url }}">
+								{% load thumbnail %}
+								<img src="{% if product.image %}{% thumbnail product.image 200x200 crop='smart' %}{% else %}{% static 'pics/bag_1.jpg' %}{% endif %}" class="product-pic">
+							</a>
+							
+						</div>
+						<div class="product-btm">
+							<a href="{{ product.get_absolute_url }}" class="product-name">{{ product.name }}</a>
+							<!--span class="product-catagory pl-5"> {{ product.category }} </span-->
+							
+							<span class="pric">${{ product.price }}</span>
+							<span class="rating " aria-label="{% blocktrans with stars=product.rating %}{{ stars }} of 5 stars{% endblocktrans %}">
+								<span style="width:{{product.get_rating_percentage }}%"></span>
+							</span>
+
+						</div>
+					</div>
+				{% endwith %}
+				{% empty %}
+				<h1 class="form-h">No item added yet.</h1>
+			{% endfor %}
+			
+		</div>
+		
+		<div class="cart-tabel">
+			<table class="cart-tabel">
+				<thead>
+					<tr>
+						<th>Image</th>
+						<th>Product</th>
+						<th>Quantity</th>
+						<th>Remove</th>
+						<th>Unit price</th>
+						<th>Price</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for item in cart %}
+						{% with product=item.product %}
+							<tr class="row-2">
+								<td>
+									<a href="{{ product.get_absolute_url }}">
+										{% load thumbnail %}
+										<img src="{% if product.image %}{% thumbnail product.image 100x100 crop='smart' %}{% else %}{% static 'pics/bag_1.jpg' %}{% endif %}">
+									</a>
+								</td>
+								<td>{{ product.name }}</td>
+								<td>
+									<form action="{% url 'cart:cart_add' product.id %}" method="post" class="q-form">
+										{{ item.update_quantity_form.quantity }}
+										{{ item.update_quantity_form.override }}
+										<input class="btn-defaolt c-b pointer" type="submit" value="Update">
+										{% csrf_token %}
+									</form>
+								</td>
+								<td>
+									<form action="{% url 'cart:cart_remove' product.id %}" method="post">
+										<input class="btn-defaolt pointer" type="submit" value="Remove">
+										{% csrf_token %}
+									</form>
+								</td>
+								<td class="num">${{ item.price }}</td>
+								<td class="num">${{ item.total_price }}</td>
+							</tr>
+						{% endwith %}
+					{% endfor %}
+					
+
+					{% if cart.coupon %}
+						<tr class="subtotal">
+							<td>Subtotal</td>
+							<td colspan="4"></td>
+							<td class="num">${{ cart.get_total_price|floatformat:2 }}</td>
+						</tr>
+						<tr class="coupon-d">
+							<td colspan="5">
+								"{{ cart.coupon.code }}" coupon
+								<span class="c-g">({{ cart.coupon.discount }}% off)</span>
+								
+							</td>
+							
+							<td class="num neg">
+								<span class="c-r">- ${{ cart.get_discount|floatformat:2 }}</span>
+							</td>
+						</tr>
+					{% endif %}
+
+
+					<tr class="total">
+						<td>Total</td>
+						<td colspan="4"></td>
+						<td class="num">${{ cart.get_total_price_after_discount|floatformat:2 }}</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="orders col-3 mt-3">
+				<h3 class="orders-h mt-0"><i class="c-gl fa fa-star"></i> Apply a coupon: <i class="c-gl far fa-star"></i></h3>
+				<form action="{% url 'coupons:apply' %}" method="post">
+					{{ coupon_apply_form }}
+					<input type="submit" value="Apply" class="btn-lg bg-g mt-3 pointer">
+					{% csrf_token %}
+				</form>
+				
+			</div>
+
+
+			
+
+		</div>
+		<div class="t-bottom pt-5 ">
+			<a href="{% url 'store:product_list' %}" class="btn-lg bg-o bg-brand-2 float-l">Continue shopping</a>
+			<a href="{% url 'orders:order_create' %}" class="btn-lg bg-b float-r">Checkout</a>
+		</div>
+		
+		 <!-- Light table -->
+ <!--            <div class="table-responsive">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    
+                    <th scope="col" class="sort" data-sort="budget">Product</th>
+                    <th scope="col" class="sort" data-sort="status">Quantity</th>
+                    <th scope="col" class="sort" data-sort="budget">Remove</th>
+                    <th scope="col" class="sort" data-sort="status">Unit price</th>
+               
+                  
+                  </tr>
+                </thead>
+                <tbody class="list">
+                  {% for item in cart %}
+                    {% with product=item.product %}
+                      <tr>
+                        <th scope="row">
+                          <div class="media align-items-center">
+                            <a href="#" class="avatar rounded-circle mr-3">
+                              <img alt="Image placeholder" src="{% if product.image %}{% thumbnail product.image 100x100 crop='smart' %}{% else %}{% static 'pics/bag_1.jpg' %}{% endif %}">
+                            </a>
+                            <div class="media-body">
+                              <span class="name mb-0 text-sm">{{product.name}}</span>
+                            </div>
+                          </div>
+                        </th>
+                        <td class="budget">
+                          $2500 USD
+                          <form action="{% url 'cart:cart_add' product.id %}" method="post" class="q-form">
+                            {{ item.update_quantity_form.quantity }}
+                            {{ item.update_quantity_form.override }}
+                            <input class="btn-defaolt c-b pointer" type="submit" value="Update">
+                            {% csrf_token %}
+                          </form>
+                        </td>
+                        <td>
+                          <span class="badge badge-dot mr-4">
+                            <i class="bg-warning"></i>
+                            <span class="status">
+                              <form action="{% url 'cart:cart_remove' product.id %}" method="post">
+                              <input class="btn-defaolt pointer" type="submit" value="Remove">
+                              {% csrf_token %}
+                            </form>
+                          </span>
+                          </span>
+                        </td>
+                        <td>
+                          <div class="d-flex align-items-center">
+                            <span class="completion mr-2">${{ item.price }}</span>
+                            <div>
+                              <div class="progress">
+                                <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                      
+                                   
+                      {% if cart.coupon %}
+                        <tr class="subtotal">
+                          <td>Subtotal</td>
+                          <td colspan="4"></td>
+                          <td class="num">${{ cart.get_total_price|floatformat:2 }}</td>
+                        </tr>
+                        <tr class="coupon-d">
+                          <td colspan="5">
+                            "{{ cart.coupon.code }}" coupon
+                            <span class="c-g">({{ cart.coupon.discount }}% off)</span>
+                            
+                          </td>
+                          
+                          <td class="num neg">
+                            <span class="c-r">- ${{ cart.get_discount|floatformat:2 }}</span>
+                          </td>
+                        </tr>
+                      {% endif %}
+
+
+                      <tr class="total">
+                        <td>Total</td>
+                        <td colspan="4"></td>
+                        <td class="num">${{ cart.get_total_price_after_discount|floatformat:2 }}</td>
+                      </tr>
+                      </tr>
+                        <td>
+                          <div class="d-flex align-items-center">
+                            <span class="completion mr-2">${{ item.total_price }}</span>
+                            <div>
+                              <div class="progress">
+                                <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                  
+                    {% endwith %}
+                  {% endfor %} -->
+                </tbody>
+              </table>
+            </div>
+
+
+
+
+	</div>
+{% endblock %}
+		<div class="col-xl-8">
+          <div class="card">
+            <div class="card-header border-0">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h3 class="mb-0">Page visits</h3>
+                </div>
+                <div class="col text-right">
+                  <a href="#!" class="btn btn-sm btn-primary">See all</a>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive">
+    
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Page name</th>
+                    <th scope="col">Visitors</th>
+                    <th scope="col">Unique users</th>
+                    <th scope="col">Bounce rate</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">
+                      /argon/
+                    </th>
+                    <td>
+                      4,569
+                    </td>
+                    <td>
+                      340
+                    </td>
+                    <td>
+                      <i class="fas fa-arrow-up text-success mr-3"></i> 46,53%
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      /argon/index.html
+                    </th>
+                    <td>
+                      3,985
+                    </td>
+                    <td>
+                      319
+                    </td>
+                    <td>
+                      <i class="fas fa-arrow-down text-warning mr-3"></i> 46,53%
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      /argon/charts.html
+                    </th>
+                    <td>
+                      3,513
+                    </td>
+                    <td>
+                      294
+                    </td>
+                    <td>
+                      <i class="fas fa-arrow-down text-warning mr-3"></i> 36,49%
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      /argon/tables.html
+                    </th>
+                    <td>
+                      2,050
+                    </td>
+                    <td>
+                      147
+                    </td>
+                    <td>
+                      <i class="fas fa-arrow-up text-success mr-3"></i> 50,87%
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      /argon/profile.html
+                    </th>
+                    <td>
+                      1,795
+                    </td>
+                    <td>
+                      190
+                    </td>
+                    <td>
+                      <i class="fas fa-arrow-down text-danger mr-3"></i> 46,53%
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>

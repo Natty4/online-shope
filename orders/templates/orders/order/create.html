@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block main_content %}
+	<div class="detail-cont col-10 d-flex">	
+		<div class="form-cont mt-5 col-6">
+			<h1 class="form-h"> Checkout </h1>
+			<form method="post" class="form-b">
+				{{ form.as_p }}
+				<button type="submit" class="btn bg-brand pointer">Place order</button> 
+				{% csrf_token %}
+			</form>
+		</div>
+		<div class="receipt">
+			<div class="orders mt-5 w-100 ">
+				<div class="order-info">
+					<i class="fa fa-cat c-o"></i>
+					<h3 class="orders-h"> Your order</h3>
+					<ul>
+						{% for item in cart %}
+							<p>
+							{{ item.quantity }}<span class="c-o">x </span>{{ item.product.name }}
+							<span class="c-g">${{ item.total_price|floatformat:2 }}</span>
+							</p>
+						{% endfor %}
+
+						{% if cart.coupon %}
+							<p>
+								"{{ cart.coupon.code }}" 
+								<span class="c-g">({{ cart.coupon.discount }}% off)</span>
+								<span class="c-r">- ${{ cart.get_discount|floatformat:2 }}</span>
+							</p>
+						{% endif %}
+
+						<p class="total_price c-w ">
+							<span class="c-w">Total:</span> 
+							<span class="c-g pl-5">${{ cart.get_total_price_after_discount|floatformat:2  }}</span>
+						</p>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

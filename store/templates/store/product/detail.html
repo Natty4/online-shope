@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+
+{% block title %}
+	{{ product.name }}
+{% endblock %}
+<h1 class="company-name align-center bg-brand-2">Online Supermarket</h1>
+{% block main_content %}
+	<div class="detail-cont mt-5 col-8">
+				
+		<div class="detail-card">
+			<div class="detail-card-pic col-sm-8 col-8">
+				<a href="{{ product.image.url }}" target="_break">
+					{% load thumbnail %}
+					<img src="{% if product.image %}{% thumbnail product.image 1000x800 crop='smart' %}{% else %}{% static 'pics/no-image.png' %}{% endif %}">
+					<!--img src="{{ product.watermarked_picture.url }}" alt="" /-->
+				</a>
+			</div>
+			<div class="detail-card-info col-sm-3 col-3">
+				<div class="product-btm">
+					<a href="{{ product.get_absolute_url }}" class="product-name"> {{ product.name }} </a>
+					<a href="{{ product.category.get_absolute_url }}" class="product-catagory pl-5">{{ product.category }} </a>
+					<br>
+					<span class="pric"> ${{ product.price }} </span>
+					<form action="{% url 'cart:cart_add' product.id %}" method="post">
+						{{ cart_product_form }}
+						{% csrf_token %}
+						<button class="btn-defaolt" type="submit">
+							<i class="cart-icon fa fa-cart-plus"></i>
+						</button>
+					</form>
+					<div class="rating " aria-label="{% blocktrans with stars=product.rating %}{{ stars }} of 5 stars{% endblocktrans %}">
+						<span style="width:{{product.get_rating_percentage }}%"></span>
+					</div>
+
+				</div>
+				<p class="produc-desc"> 
+					{{ product.description|linebreaks }}
+					
+				</p>
+			</div>
+		</div>
+		
+		
+	</div>
+{% endblock %}
+			
+		
+			
+	
+		<!-- <div class="jambotron">
+			<span class="ml-5 c-b">see allso..</span>
+			<div class="related-products">
+				<div class="card  col-sm-3 col-2 ">
+					<div>
+						<a href="{{ product.image.url }}" target="_break">
+							<img src="{% static 'pics/sho_3.jpg' %}" class="product-pic">
+						</a>
+						
+					</div>
+					<div class="product-btm">
+						<a href="#" class="product-name">SH-96</a>
+						<span class="product-catagory pl-5"> bag </span>
+						<br>
+						<span class="pric">$120.00</span>
+						<a href=""><i class="cart-icon fa fa-cart-plus"></i></a>
+
+					</div>
+				</div>
+				<div class="card  col-sm-3 col-2 ">
+					<div>
+						<a href="{{ product.image.url }}" target="_break">
+							<img src="{% static 'pics/sho_3.jpg' %}" class="product-pic">
+						</a>
+						
+					</div>
+					<div class="product-btm">
+						<a href="#" class="product-name">SH-96</a>
+						<span class="product-catagory pl-5"> bag </span>
+						<br>
+						<span class="pric">$120.00</span>
+						<a href=""><i class="cart-icon fa fa-cart-plus"></i></a>
+
+					</div>
+				</div>
+				<div class="card  col-sm-3 col-2 ">
+					<div>
+						<a href="{{ product.image.url }}" target="_break">
+							<img src="{% static 'pics/sho_3.jpg' %}" class="product-pic">
+						</a>
+						
+					</div>
+					<div class="product-btm">
+						<a href="#" class="product-name">SH-96</a>
+						<span class="product-catagory pl-5"> bag </span>
+						<br>
+						<span class="pric">$120.00</span>
+						<a href=""><i class="cart-icon fa fa-cart-plus"></i></a>
+
+					</div>
+				</div>
+				<div class="card  col-sm-3 col-2 ">
+					<div>
+						<a href="{{ product.image.url }}" target="_break">
+							<img src="{% static 'pics/sho_3.jpg' %}" class="product-pic">
+						</a>
+						
+					</div>
+					<div class="product-btm">
+						<a href="#" class="product-name">SH-96</a>
+						<span class="product-catagory pl-5"> bag </span>
+						<br>
+						<span class="pric">$120.00</span>
+						<a href=""><i class="cart-icon fa fa-cart-plus"></i></a>
+
+					</div>
+				</div>
+				<div class="card  col-sm-3 col-2 ">
+					<div>
+						<a href="{{ product.image.url }}" target="_break">
+							<img src="{% static 'pics/sho_3.jpg' %}" class="product-pic">
+						</a>
+						
+					</div>
+					<div class="product-btm">
+						<a href="#" class="product-name">SH-96</a>
+						<span class="product-catagory pl-5"> bag </span>
+						<br>
+						<span class="pric">$120.00</span>
+						<a href=""><i class="cart-icon fa fa-cart-plus"></i></a>
+
+					</div>
+				</div>
+				
+			</div>
+			
+		</div> -->

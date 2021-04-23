@@ -1,0 +1,66 @@
+{% extends 'base.html'%}
+{% load i18n static %}
+
+
+{% block title %}
+	About Oure Team
+{% endblock %}
+
+{% block banner_content %}
+	{% include "banner.html" %} 
+{% endblock %}
+
+{% block main_content %} 
+	<div class="about col-8">
+		<div class="p-card ">
+			<h2 class="">
+				About Us {{ abt.title }}
+			</h2>
+			<p class="p-5 c-bl">
+				{{ abt.detail }}
+			</p>
+		</div>
+	</div>				
+{% endblock %}
+
+{% block footer_content %}
+	<div class="about-cos d-flex">
+		{% for p in cos %}
+			<div class="profile col-2">
+				<div class=" p-card ">
+					<div class="p-pic">
+						{% load thumbnail %}
+						<img src="{% if p.pictur %}{% thumbnail p.pictur 200x200  %}{% else %}{% static 'pics/no-image.png' %}{% endif %}">
+					</div>
+					<div class="about-cos-body">
+						<P > {{ p.name }} </P>
+						<P> {{ p.role }} </P>
+						<P class="c-o"> {{ p.contact }} </P>
+						<P class="hobye"> {{ p.hobby }} </P>
+						
+					</div>
+					<div class="contact">
+						<hr>
+						<a href="https://twitter.com/{{ p.twitter }}" target="_break" class="links twitter ">
+							<i class="pointer pl-3  fab fa-twitter"></i>
+						</a>
+						<a href="https://telegram.org/{{ p.telegram }}" target="_break" class="links telegram">
+							<i class="pointer pl-3  fab fab fa-telegram"></i>
+						</a>
+						<a href="https://instagram.com/{{ p.instagram }}" target="_break" class="links instagram">
+							<i class="pointer pl-3  fab fa-instagram"></i>
+						</a>
+						<a href="https://facebook.com/{{ p.facebook }}" target="_break" class="links facebook"><i class="pointer pl-3  fab fa-facebook"> </i> 
+						</a>
+						
+						
+					</div>
+				</div>
+				
+			</div>
+		{% endfor %}
+		
+	</div>
+	{% include "footer.html" %} 
+{% endblock %}
+
