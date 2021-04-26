@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Verify{% endblock %}
+
+{% block form_content %}
+	<div id="page-content">
+      <!--Page Title-->
+      <div class="page section-header text-center">
+        <div class="page-title">
+              <div class="wrapper"><h1 class="page-width">Create an Account</h1></div>
+        </div>
+      </div>
+        <!--End Page Title-->
+        
+        <div class="container">
+          <div class="row">
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6 main-col offset-md-3">
+                  <div class="mb-4">
+                     
+                  	<form method="POST">
+						{% csrf_token %}
+						{{ verify_form }}
+						<input type="hidden" name="sk" value="{{new_user}}">
+						<button class="btn-l-p" type="submit">Verify</button>
+						
+					</form>
+                   </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+{% endblock %}
+		<!-- <h1>{{ new_user }}</h1>
+		<form method="POST">
+			{% csrf_token %}
+			{{ verify_form }}
+			<input type="hidden" name="sk" value="{{new_user}}">
+			<button class="btn-l-p" type="submit">Verify</button>
+			
+		</form> -->

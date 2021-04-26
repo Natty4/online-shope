@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Logged out{% endblock %}
+{% block form_content %}
+	 <div id="page-content">
+      <!--Page Title-->
+      <div class="page section-header text-center">
+        <div class="page-title">
+          <div class="wrapper"><h1 class="page-width">Logged out</h1></div>
+        </div>
+      </div>
+      <!--End Page Title-->
+      
+      <div class="container">
+        <div class="row">
+              <div class="col-12 col-sm-12 col-md-6 col-lg-6 main-col offset-md-3">
+                <div class="mb-4">
+					<p>
+						You have been successfully logged out.
+						You can login again. 
+					</p>
+					 <a class="btn mb-3 " href="{% url 'login' %}" >log-in</a>
+                   
+                </div>
+              </div>
+          </div>
+      </div>
+        
+    </div>
+		
+{% endblock %}
+
+#logged_out

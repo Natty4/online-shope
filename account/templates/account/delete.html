@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block form_content %}
+	
+
+			<!--Body Content-->
+    <div id="page-content">
+      <!--Page Title-->
+      <div class="page section-header text-center">
+	      <div class="page-title">
+            <div class="wrapper"><h1 class="page-width">{{ request.user.username }}</h1></div>
+            {% if request.user.profile.photo %}
+		      <img src="{{ request.user.profile.photo.url }}" alt="{{ request.user.first_name }}" height="auto" class="card-img">
+		    {% else %}
+			    <img src="{% static 'img/default-m.jpg' %}" alt="..." width="100" height="auto">
+			    <i class="fa fa-2x fa-user "></i>
+	    	{% endif %}
+          </div>
+      </div>
+        <!--End Page Title-->
+        
+        <div class="container">
+
+          <div class="row">
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6 main-col offset-md-3" style="color: red;">
+                	{% if form.errors %}
+						{{ form.errors }}
+			
+					{% endif %}
+                  <div class="mb-4">
+                  		<h5 class="card-title">{{ request.user.first_name }} {% if request.user.is_active %}<span class="text-primary">☑</span>{% endif %}</h5>
+						<p class="card-text text-success">Are you sure to delete this account?.</p>
+	                    <form method="post"  id="CustomerLoginForm" accept-charset="UTF-8" class="contact-form"> 
+	                  		{% csrf_token %}
+	                       	<button class="btn m-3" type="submit"> Yes </button>
+	                    </form>
+	                    <a href="{% url 'dashboard' %}" class="pointer btn md-3"><i class="fa fa-arrow-left"></i> Cancel </a>
+               
+                  </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+{% endblock %}
+<!-- 	<div class="card col-6 p-1 c-p" style="width: 18rem;">
+		{% if request.user.profile.photo %}
+	      <img src="{{ request.user.profile.photo.url }}" alt="{{ request.user.first_name }}" height="auto" class="w-100">
+	    {% else %}
+		    <img src="{% static 'img/default-m.jpg' %}" alt="..." width="100" height="auto">
+		    <i class="fa fa-2x fa-user "></i>
+    	{% endif %}
+		<div class="form">
+			<h5 class="card-title">{{ request.user.first_name }} {% if request.user.is_active %}<span class="text-primary">☑</span>{% endif %}</h5>
+			<p class="card-text text-success">Are you sure to delete this account?.</p>
+			<form method="POST"> 
+		        {% csrf_token %}        
+		        <button type="submit" class="btn-l-r w-100 pointer hover-d"> Yes </button> 
+		    </form>
+		    <br>
+	     	<a href="{% url 'dashboard' %}" class="pointer c-b"><i class="fa fa-arrow-left"></i> Cancel </a>
+		</div>
+	</div> -->

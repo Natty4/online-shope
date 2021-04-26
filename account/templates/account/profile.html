@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load app_tags %}
+{% block main_content %}
+
+
+	<div class="row">
+	  <div class="side ">
+	    <div class="profile-card-img ml-25 large">
+            {% if profile.profile.photo %}
+              <img src="{{ profile.profile.photo.url }}" alt="{{profile.username }}">
+            {% else %}
+		        <a href="{% url 'dashboard' %}" class="dropdown-item">
+		          <img src="{% static 'img/default-m.jpg' %}" alt="avater">
+		        </a>
+              
+            {% endif %}
+            
+          </div>
+          <h3 class="form-header align-c">{{ profile.username }}</h3>
+	    <div class="dashboard-btn" style="height:200px;">Image</div>
+	    <p>Some text about me in culpa qui officia deserunt mollit anim..</p>
+	    <h3>More Text</h3>
+	    <p>Lorem ipsum dolor sit ame.</p>
+	    {% if request.user == profile %}
+		    <div class="dashboard-btn" style="height:60px;">
+			    <a href="{% url 'password_change' %}" class="links-d">
+		          <i class="fas fa-unlock"></i>
+		          <span class="c-p">Change Password</span>
+		        </a>
+	    	</div><br>
+		    <div class="dashboard-btn-brand" style="height:60px;">
+		    	<a href="#" class="links-d">
+		          <i class="fas fa-sign-out-alt"></i>
+		          <span >upgrad to pro account</span>
+		        </a>
+		    </div><br>
+		    <div class="dashboard-btn" style="height:60px;">
+		    	<a href="{% url 'logout' %}" class="links-d">
+		          <i class="fas fa-sign-out-alt"></i>
+		          <span class="c-r">logout</span>
+		        </a>
+		    </div><br>
+		 {% endif %}
+	  </div>
+	  <div class="main">
+	    <div class="dashboard-btn" style="height: 400px; background-image: url('{% static 'img/gf.jpg' %}');">
+			<div class="profile-card-img-bl">			
+				<div class="profile-card-img ml-25">
+					{% if profile.profile.photo %}
+					<img src="{{ profile.profile.photo.url }}" alt="{{profile.username }}">
+					{% else %}
+					<a href="{{profile.get_profile_url}}" class="dropdown-item">
+					<img src="{% static 'img/default-m.jpg' %}" alt="avater">
+					</a>
+
+					{% endif %}
+				</div>
+		    </div>
+	    </div>
+
+	    {% show_my_artifacts profile.pk %}
+	
+	    <div class="img-container">
+			<span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span>
+			<img id="expandedImg" style="width:100%">
+			<div id="imgtext"></div>
+		</div>
+	    
+	    <p>Some text..</p>
+	    <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+	    <br>
+	    <h2>TITLE HEADING</h2>
+	    <h5>Title description, Sep 2, 2017</h5>
+	    <div class="dashboard-btn" style="height:200px;">Image</div>
+	    <p>Some text..</p>
+	    <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+	  </div>
+	</div>
+{% endblock %}

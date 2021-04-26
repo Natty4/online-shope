@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block form_content %}
+      
+    <!--Body Content-->
+    <div id="page-content">
+      <!--Page Title-->
+      <div class="page section-header text-center">
+      <div class="page-title">
+            <div class="wrapper"><h1 class="page-width">Login</h1></div>
+          </div>
+      </div>
+        <!--End Page Title-->
+        
+        <div class="container">
+          <div class="row">
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6 main-col offset-md-3">
+                  <div class="mb-4">
+                    <form method="post"  id="CustomerLoginForm" accept-charset="UTF-8" class="contact-form"> 
+                        {% csrf_token %}
+                          <div class="row">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="form-group">
+                                    <label for="CustomerEmail">Phone</label>
+                                    <input type="tel" name="username" id="id_username" class="" autocorrect="off" autocapitalize="off" autofocus="">
+                                    {{ form.username.errors }}
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="form-group">
+                                    <label for="CustomerPassword">Password</label>
+                                    <input type="password" value="" name="password" placeholder="" id="CustomerPassword" class=""> 
+                                    {{ form.password.errors }}                         
+                                </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="text-center col-12 col-sm-12 col-md-12 col-lg-12">
+                                <input type="submit" class="btn mb-3" value="Sign In">
+                                <p class="mb-4">
+                                  <a href="{% url 'password_reset' %}" id="RecoverPassword">Forgot your password?</a> &nbsp; | &nbsp;
+                                  <a href="{% url 'register' %}" id="customer_register_link">Create account</a>
+                                </p>
+                            </div>
+                         </div>
+                    </form>
+                  </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+{% endblock %}
+
+
+
+
+
+<!-- 
+
+
+  <div class="col-8">
+    
+
+      <div class="message bg-r ">
+        {{ form.username.errors }}
+        {{ form.password.errors }}
+        {{form.errors}}
+    
+      </div>
+           <div class="form-cont mt-5 col-6">
+            <h1 class="form-h"> Login </h1>
+            <form method="post" class="form-b">
+              {% csrf_token %}
+              {{ form.as_p }}
+              <button type="submit" class="btn bg-brand pointer w-25 align-c">Login</button> 
+            </form>
+            <p>allredy has an account ?</p>
+            
+            <p><a href="{% url 'password_reset' %}" class="c-b">Forgot passwors !</a></p><br>
+
+            <p>not registered yet ?</p>
+
+          <a href="{% url 'register' %}" class="btn bg-brand pointer pointer links w-25"><button class="btn bg-brand pointer w-25 align-c">register</button></a>
+          <div class="logo ">
+              <p class="logo-txt"><a href="{% url 'store:product_list' %}" class="links c-p">7Noon</a></p>
+            </div>
+          </div>
+  </div> -->

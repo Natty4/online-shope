@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block form_content %}
+  <div class="d-flex wrap">
+    <div class="col-12 col-sm-12 col-md-3 col-lg-3 sidebar filterbar">
+      <div class="closeFilter d-block d-md-none d-lg-none"><i class="icon icon anm anm-times-l"></i></div>
+      <div class="sidebar_tags">
+          <div class="sidebar_widget filterBox filter-widget">
+              <div class="widget-title"><h2>Menu</h2></div>
+              <ul>
+                  <li>
+                    <a href="{% url 'password_change' %}">
+                      <label for="check1">
+                        <span>
+                          <span></span>
+                        </span>
+                        <i class="fas fa-unlock"></i>
+                        Change Password
+                      </label>
+                   </a>
+                  </li>
+                  <li>
+                      <a href="{% url 'edit' %}" class="links-d">
+                    
+                <label for="check3">
+                  <span><span></span></span>
+                  <i class="fa fa-edit"></i>
+                  Edit {{ request.user.username}}
+                </label>
+              </a>
+                  </li>
+                  <li>
+                      <a href="{% url 'logout' %}" class="links-d">
+                    
+                <label for="check3">
+                  <span><span></span></span>
+                  <i class="fas fa-sign-out-alt"> </i> Logout
+                </label>
+              </a>
+                  </li>
+              </ul>
+          </div>
+
+        <div class="sidebar_widget">
+            <div class="widget-title"><h2>Popular Products</h2></div>
+          
+        </div>
+
+          <div class="sidebar_widget static-banner">
+            <img src="assets/images/side-banner-2.jpg" alt="" />
+          </div>
+
+          <div class="sidebar_widget">
+            <div class="widget-title">
+              <h2>Product Tags</h2>
+            </div>
+            <div class="widget-content">
+              <ul class="product-tags">
+              
+              </ul>
+              <span class="btn btn--small btnview">View all</span> </div>
+             </div>
+
+      </div>
+
+    </div>
+    <div id="page-content">
+
+      <div class="page section-header text-center">
+        <div class="page-title">
+            <div class="wrapper"><h1 class="page-width">My Dashboard</h1></div>
+          </div>
+      </div>
+
+        
+        <div class="container">
+          <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 main-col">
+                        <div class="wishlist-table table-content table-responsive">
+                           <div class="card ">
+                              <div class="col-md-12 col-12 text-center">
+                                  <div class="col-12 col-md-6 col-sm-6 c-p form">
+                                      {% if user_edit_form.errors or profile_edit_form.errors %}
+                                        <div class="message bg-r p-1">
+                                               {{ user_edit_form.phone.errors }}
+                                              {{ user_edit_form.password.errors }}
+                                              {{ user_edit_form.username.errors }}
+                                              {{ profile_edit_form.birth_day.errors }}
+                               
+
+                                        </div>
+                                      {% endif %}
+
+                                      <div class="profile-card-img ml-25">
+                                        <a href="{% url 'dashboard' %}">
+                                          {% if request.user.profile.photo %}
+                                            <img src="{{ request.user.profile.photo.url }}" alt="{{request.user.username }}">
+                                          {% else %}
+                                            <img src="{% static 'pics/default-m.jpg' %}" alt="avater">
+                                          {% endif %}
+                                        </a>
+                                        
+                                      </div>
+                                      <h3 class="form-header align-c">{{ request.user.username }}</h3>
+                                  </div>
+                                </div>
+                                <form method="POST" enctype="multipart/form-data" class="d-flex-w col-12">
+                                  <div class="form col-12 col-md-6 col-sm-6">
+                                  {% csrf_token %}
+                                      {% for field in user_edit_form %}
+                                        <p>{{field.label}}</p>
+                                           {{field}}
+                                      {% endfor %}
+
+                               
+                                  </div>
+                                  <div class="form col-12 col-md-6 col-sm-6 c-p">
+                                    {% for field in profile_edit_form %}
+                                        <p>{{field.label}}</p>
+                                           {{field}}
+                                      {% endfor %}
+
+
+                                  </div>
+                                  <br><br>
+                                  <div class="form col-12 col-md-6 col-sm-6">
+                                    <button type="submit" class="btn md-3 w-100" >Update</button>
+                                    
+                                  </div>
+                                    
+                               
+                                </form>
+
+                                <div class="form col-md-6 col-12 text-center tex-primary">
+                                    <a href="{% url 'delete_account' request.user.pk  %}">
+                                      <i class=""></i>
+                                      <br><br>
+                                      <p class="" style="color: red;">Delete account</p>
+                                    </a>
+                                  
+                                </div>
+                                            
+                </div>
+            </div>
+        </div>
+            
+    </div>
+    
+  </div>
+
+{% endblock %}
