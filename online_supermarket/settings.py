@@ -1,8 +1,8 @@
 
 
 #Online-Supermarket Astu 2021
-#BY: Notty (aka Skat), Fullstak-Dev
-#Mail: Notty7kt@gmail.com, skatbaba@gmail.com
+#BY: Natnael (aka MrPGuy), Fullstak-Dev
+#Mail: Natty7kt@gmail.com
 
 
 from pathlib import Path
@@ -73,6 +73,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'cart.context_processors.cart',
             ],
         },
     },
