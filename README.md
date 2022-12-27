@@ -1,1 +1,1 @@
-# online-shope
+# [ online-shope 🌐] (http://skat.pythonanywhere.com/)
